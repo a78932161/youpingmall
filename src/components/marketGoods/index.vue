@@ -20,10 +20,12 @@
                         <!--                        <div class="m-g-g-d-info">-->
                         <!--                            {{item.sub_title}}-->
                         <!--                        </div>-->
+
                         <div class="m-g-g-d-price">
                             <span>￥{{Number(item1.price)}}</span>
-                            <label>赚9.93起</label>
+                            <em>￥{{Number(item1.original_price)}}</em>
                         </div>
+
                     </a>
                 </div>
 
@@ -162,20 +164,20 @@
                 }
 
                 .m-g-g-d-price {
-                    padding: 0 4px;
-                    color: black;
+                    padding-left: 4px;
 
                     span {
-                        letter-spacing: -1px;
-                        font-size: 14px;
+                        font-size: 15px;
                         font-weight: 700;
-                        margin-right: 4px;
+                        margin-right: 6px;
+                        color: red;
                     }
 
-                    label {
-                        font-size: 14px;
-                        font-weight: 700;
-                        color: red;
+                    em {
+                        font-style: normal;
+                        font-size: 13px;
+                        text-decoration: line-through;
+                        color: #939393;
                     }
 
                 }
