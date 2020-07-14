@@ -1,0 +1,16 @@
+@import "reset";
+@import "mixin";
+@import "border";
+
+.w {
+  width: 359px;
+  margin: auto;
+}
+
+.wc {
+  display: flex;
+  justify-content: center;
+}
+
+
+@include flexible; //移动端适配
