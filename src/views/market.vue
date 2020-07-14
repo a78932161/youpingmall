@@ -19,8 +19,6 @@
     import marketSwipe from 'components/marketSwipe/index'
     import boxWrapper from 'components/boxWrapper/index'
     import indexArea from 'components/area/index'
-
-
     import {getBanner, asyncGetBanner, getTitle} from "api/dome";
 
     export default {
