@@ -1,32 +1,32 @@
 <template>
     <div class="tabList">
-        <van-tabs v-model="active" scrollspy sticky @change="getTabIndex">
+        <van-tabs v-model="active" swipeable sticky @change="getTabIndex">
             <van-tab v-for="(item,index) in tabList" :title="item.title" :key="index" :name="item.id">
-                <lazy-component>
-                    <img :src="item.pic_url" alt="" class="tabList-ad">
-                    <div v-for="(item1,index1) in goodsList[item.id]" :key="index1" class="tabList-goods">
-                        <a :href="item1['share_url']">
-                            <div class="tabList-goods-l">
-                                <img v-lazy="item1.pic_url" alt=""/>
+                <!--                <lazy-component>-->
+                <img :src="item.pic_url" alt="" class="tabList-ad">
+                <div v-for="(item1,index1) in goodsList[item.id]" :key="index1" class="tabList-goods">
+                    <a :href="item1['share_url']">
+                        <div class="tabList-goods-l">
+                            <img v-lazy="item1.pic_url" alt=""/>
+                        </div>
+                        <div class="tabList-goods-r">
+                            <div class="tabList-goods-r-title">{{item1.title}}</div>
+                            <div class="tabList-goods-r-info">
+                                {{item.sub_title}}
                             </div>
-                            <div class="tabList-goods-r">
-                                <div class="tabList-goods-r-title">{{item1.title}}</div>
-                                <div class="tabList-goods-r-info">
-                                    {{item.sub_title}}
+                            <div class="tabList-goods-r-price">
+                                <div class="tabList-goods-r-price-left">
+                                    <span>￥{{exceed(item1.price)}}</span>
+                                    <em>￥{{exceed(item1.original_price)}}</em>
                                 </div>
-                                <div class="tabList-goods-r-price">
-                                    <div class="tabList-goods-r-price-left">
-                                        <span>￥{{exceed(item1.price)}}</span>
-                                        <em>￥{{exceed(item1.original_price)}}</em>
-                                    </div>
-                                    <div class="tabList-goods-r-price-right">
-                                        <van-button round type="info" color="#FF2227">立即购买</van-button>
-                                    </div>
+                                <div class="tabList-goods-r-price-right">
+                                    <van-button round type="info" color="#FF2227">立即购买</van-button>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                </lazy-component>
+                        </div>
+                    </a>
+                </div>
+                <!--                </lazy-component>-->
 
             </van-tab>
         </van-tabs>
@@ -46,8 +46,7 @@
         },
         props: {
             tabId: {
-                type: [String, Number],
-                default: 0,
+                type: Number,
             }
         },
         mounted() {
@@ -75,6 +74,9 @@
 
             getTabIndex(id, name) {
                 console.log(id, name);
+                if (name === '更多商品') {
+                    // location.href = 'https://www.baidu.com'
+                }
             },
             exceed(data) {
                 if (Number(data) > 99) {
@@ -83,7 +85,7 @@
                     return data
                 }
             }
-        }
+        },
     }
 </script>
 

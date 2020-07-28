@@ -22,13 +22,12 @@
     import {getBanner, asyncGetBanner, getTitle} from "api/dome";
 
     export default {
+        inject: ['reload'],
         data() {
             return {
                 title: '',
                 pid: '',
-                componentList: [
-                    {}
-                ],
+                componentList: [],
                 blockLength: 0,
             }
         },
@@ -64,13 +63,18 @@
                                 break;
                         }
                     });
-                    console.log(this.componentList)
                 })
             },
 
             async getAll(id, name, index) {
                 let data = (await asyncGetBanner({type: id})).data.data.list;
-                this.$set(this.componentList, index, {name: name, list: data});
+                if (data) {
+                    console.log(data);
+                    this.$set(this.componentList, index, {name: name, list: data});
+                }
+                // this.componentList.push({name: name, list: data})
+                // this.$set(this.componentList, index, {name: name, list: data});
+                //console.log(this.componentList);
             },
 
         },
@@ -79,7 +83,16 @@
             if (this.$route.query.id) {
                 this.getList(this.$route.query.id);
             }
-        }
+        },
+
+        beforeRouteUpdate(to, from, next) {
+            if (to.fullPath !== from.fullPath) {
+                next()
+                this.getList(this.$route.query.id);
+                this.reload();
+            }
+        },
+
     }
 </script>
 

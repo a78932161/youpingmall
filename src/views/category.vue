@@ -22,7 +22,7 @@
                 <div class="category-right-item">
                     <a :href="item1.url" v-for="(item1,index1) in navList[activeKey]['list']" :key="index1">
                         <img :src="item1.pic_url" class="category-right-item-img" alt="">
-<!--                        <img v-lazy="item1.pic_url" class="category-right-item-img" alt=""/>-->
+                        <!--                        <img v-lazy="item1.pic_url" class="category-right-item-img" alt=""/>-->
                     </a>
                 </div>
             </div>

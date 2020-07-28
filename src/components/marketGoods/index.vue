@@ -1,6 +1,6 @@
 <template>
     <div class="marketGoods">
-        <van-tabs v-model="active" scrollspy sticky style="background-color: red">
+        <van-tabs v-model="active" swipeable sticky style="background-color: red">
 
             <van-tab v-for="(item,index) in tabList" :title="item.title" :key="index" :name="item.id"
                      class="marketGoods-goods">

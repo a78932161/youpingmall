@@ -7,6 +7,8 @@ import './components/icons'//初始化icon组件
 import './plugins/loding'//按需引入
 import './plugins/flexible'//获取到font基准
 
+
+
 import axios from './plugins/fetch'
 
 Vue.prototype.axios = axios

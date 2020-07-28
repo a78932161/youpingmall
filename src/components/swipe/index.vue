@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="swipe">
         <van-swipe :autoplay="3000" :style="size" class="swipe-radius" :stop-propagation="false"
                    indicator-color="rgb(252,71,86)">
             <van-swipe-item v-for="(item, index) in images" :key="index">
@@ -59,9 +59,6 @@
 
 <style lang="scss" scoped>
     .swipe {
-        width: 375px;
-        height: 142px;
-
         .swipe-radius {
             border-radius: 10px;
         }

@@ -3,18 +3,28 @@
         <!--        <svg-icon icon-class="qq"/>-->
         <search></search>
         <!--1 A-->
-        <div class="swipeStyle">
-            <div class="swipeTop"></div>
-            <swipe :images="imagesList" :size="{width: '92vw',height: '142px'}" class="wc swipe"></swipe>
+        <top-nav :list="navList" @current="getCurrent"></top-nav>
+
+        <div class="swipeStyle" v-if="navIndex===0">
+            <swipe :images="imagesList" :size="{width: '96vw',height: '142px'}" class="wc"></swipe>
+            <!--2 B-->
+            <!--        <component is="boxWrapper" :boxList="boxList" :areaList="areaList"></component>-->
+            <boxWrapper :boxList="boxList"></boxWrapper>
+            <!--3 C-->
+            <indexArea :areaList="areaList"></indexArea>
+            <swipe class="wc" :images="imagesList" :size="{ width: '96vw',height: '96px'}"></swipe>
+            <!--4 D-->
+            <div v-if="tabId">
+                <tabList :tabId="tabId"></tabList>
+            </div>
         </div>
-        <!--2 B-->
-        <!--        <component is="boxWrapper" :boxList="boxList" :areaList="areaList"></component>-->
-        <boxWrapper :boxList="boxList"></boxWrapper>
-        <!--3 C-->
-        <indexArea :areaList="areaList"></indexArea>
-        <swipe class="wc" :images="imagesList" :size="{ width: '96vw',height: '96px'}"></swipe>
-        <!--4 D-->
-        <tabList :tabId="tabId"></tabList>
+        <div class="home-nav-item" v-else>
+            <a :href="item1.url" v-for="(item1,index1) in navList[navIndex]['child']" :key="index1"
+               class="home-nav-items">
+                <img :src="item1.pic_url" class="home-nav-item-img" alt="">
+            </a>
+        </div>
+
         <suspended></suspended>
     </div>
 </template>
@@ -26,16 +36,19 @@
     import indexArea from 'components/area/index'
     import tabList from 'components/tabList/index'
     import suspended from 'components/suspended/index'
+    import topNav from 'components/topNav/index'
 
-    import {getBanner, getTitle} from "api/dome";
+    import {getBanner, getTitle, getNav} from "api/dome";
 
     export default {
         data() {
             return {
+                navIndex: 0,
+                navList: [],
                 imagesList: [],
                 boxList: [],
                 areaList: [],
-                tabId: 0,
+                tabId: '',
             }
         },
         components: {
@@ -44,15 +57,21 @@
             boxWrapper,
             indexArea,
             tabList,
-            suspended
+            suspended,
+            topNav
         },
         mounted() {
             this.getList();
         },
         methods: {
             getList() {
-                getTitle({id:0}).then(res => {
-                    console.log(res.data.data.block);
+                getNav().then(res => {
+                    this.navList = res.data.data.list;
+                    this.navList.unshift({name: '首页'});
+                });
+
+
+                getTitle({id: 0}).then(res => {
                     const {block} = res.data.data;
                     block.forEach((item) => {
                         console.log(item);
@@ -67,7 +86,7 @@
                                 this.getAreaList(item.id);
                                 break;
                             case "4":
-                                this.tabId = item.id;
+                                this.tabId = Number(item.id);
                                 break;
                         }
                     })
@@ -89,6 +108,9 @@
                 getBanner({type: id}).then(res => {
                     this.areaList = res.data.data.list;
                 })
+            },
+            getCurrent(index) {
+                this.navIndex = index;
             }
 
         }
@@ -97,22 +119,30 @@
 
 <style lang="scss" scoped>
     .home {
+        height: 100vh;
         background-color: rgb(245, 245, 245);
     }
 
-    .swipeStyle {
-        position: relative;
-        height: 150px;
+    .home-nav-item {
+        margin: 0 auto;
+        padding: 5px;
+        width: 350px;
+        background: #fff;
+        border-radius: 10px;
 
-        .swipeTop {
-            height: 30px;
-            background-color: rgb(252, 71, 86);
+        .home-nav-items {
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
-        .swipe {
-            position: absolute;
-            left: 0;
-            top: 6px;
+        .home-nav-items:nth-child(4n) {
+            margin-right: 0;
+        }
+
+        .home-nav-item-img {
+            height: 105px;
+            width: 79px;
         }
     }
+
 </style>
